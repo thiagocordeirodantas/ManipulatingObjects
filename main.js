@@ -1,16 +1,19 @@
 let listaDeItens = []  
 
+const form = document.getElementById('form-itens')
+const itensInput = document.getElementById('receber-item')
 
+form.addEventListener('submit', function(evento){
+    evento.preventDefault()
+    salvarItem()
+})
 
-let  cliente = {
-    nome: 'Mariana', 
-    idade: 35,
-    genero: 'Feminino',
-    estado: 'Pernambuco',
+function salvarItem(){
+    const comprasItem = itensInput.value
 
-    mostrarCliente: function(){
-        alert(`Olá, meu nome é Mariana e moro no estado de  ${cliente.estado}`)
-    }
- }
+    listaDeItens.push({
+        valor: comprasItem
+    })
 
- cliente.mostrarCliente()
+    console.log(listaDeItens)
+}

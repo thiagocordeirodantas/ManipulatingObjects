@@ -39,4 +39,12 @@ function mostrarItem() {
         </div>
     </li>`
     })
+
+    const inputCheck = document.querySelectorAll('input[type="checkbox"]')
+
+    inputCheck.forEach( i => {
+        i.addEventListener('click',((evento) => {
+            console.log("fui clickado")
+        }))
+    })
 }

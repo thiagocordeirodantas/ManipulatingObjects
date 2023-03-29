@@ -3,11 +3,13 @@ let listaDeItens = []
 const form = document.getElementById('form-itens')
 const itensInput = document.getElementById('receber-item')
 const ulItens = document.getElementById('lista-de-itens')
+const ulItensComprados = document.getElementById('itens-comprados')
 
 form.addEventListener('submit', function(evento){
     evento.preventDefault()
     salvarItem()
     mostrarItem()
+    itensInput.focus()
 })
 
 function salvarItem(){
@@ -19,15 +21,29 @@ function salvarItem(){
     } else {
 
     listaDeItens.push({
-        valor: comprasItem
+        valor: comprasItem,
+        checar: false
     })
 }
-    console.log(listaDeItens)
+   itensInput.value = ''
 }
 
 function mostrarItem() {
     ulItens.innerHTML = ""
+    ulItensComprados.innerHTML = ''
     listaDeItens.forEach((elemento,index) => {
+        if(elemento.checar){
+        ulItensComprados.innerHTML = `
+    <li class="item-compra is-flex is-justify-content-space-between" data-value="${index}">
+        <div>
+            <input type="checkbox" checked class="is-clickable" />
+            <span class="itens-comprados is-size-5">${elemento.valor}</span>
+        </div>
+        <div>
+            <i class="fa-solid fa-trash is-clickable deletar"></i>
+        </div>
+    </li>`
+        } else {
         ulItens.innerHTML += `
         <li class="item-compra is-flex is-justify-content-space-between" data-value="${index}">
         <div>
@@ -38,13 +54,17 @@ function mostrarItem() {
             <i class="fa-solid fa-trash is-clickable deletar"></i>
         </div>
     </li>`
-    })
+
+}
+})
 
     const inputCheck = document.querySelectorAll('input[type="checkbox"]')
 
     inputCheck.forEach( i => {
         i.addEventListener('click',((evento) => {
-            console.log("fui clickado")
+            const valorDoElemento = evento.target.parentElement.parentElement.getAttribute('data-value')
+            listaDeItens[valorDoElemento].checar = evento.target.checked
+            mostrarItem()
         }))
     })
 }
